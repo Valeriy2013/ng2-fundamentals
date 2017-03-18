@@ -4,7 +4,7 @@ This is the getting started package for the Pluralsight course on Angular 2 Fund
 
 **Course Status**
 
-The course is currently up-to-date!
+The course is currently up-to-date.
 
 
 Getting Started

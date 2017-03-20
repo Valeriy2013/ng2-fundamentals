@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { EventService } from "./shared/index";
 
 @Component({
     templateUrl: 'app/events/create-event.component.html',
@@ -12,14 +13,35 @@ import { Router } from "@angular/router";
       .error :ms-input-placeholder { color: #999; }
     `]
 })
-export class CreateEventComponent{
+export class CreateEventComponent {
+        
     isDirty:boolean = true
-    constructor(private route: Router){
+    event:any
+
+    constructor(private route: Router, private eventService: EventService){
         
     }
 
+    /*ngOnInit() {
+        this.event = {
+            id: 1,
+            name: 'New Event',
+            date: new Date('9/12/2036'),
+            time: '10:00 am',
+            price: 55.99,
+            imageUrl: '/app/assets/images/angularconnect-shield.png',
+            location: {
+                address: '43 DT',
+                city: 'MyCity',
+                country: 'MyCountry'
+            },
+        }    
+    }*/
+
     saveEvent(formValues) {
-        console.log(formValues)
+        this.eventService.saveEvent(formValues)
+        this.isDirty = false
+        this.route.navigate(['/events'])
     }
 
     cancel(){

@@ -11,14 +11,16 @@ import {
     EventRouteActivator,
     EventsListResolver,
     CreateSessionComponent,
-    SessionListComponent
+    SessionListComponent,
+    DurationPipe
 } from './events/index'
 import { EventsAppComponent } from './events-app.component'
 //import { EventsListComponent } from './events/events-list.component'
 //import { EventThumbnailComponent } from './events/event-thumbnail.component'
 import { NavBarComponent } from './nav/navbar.component'
 //import { EventService } from './events/shared/event.service'
-import { ToastrService } from './common/toastr.service'
+//import { ToastrService } from './common/toastr.service'
+import { TOASTR_TOKEN, Toastr } from './common/toastr.service'
 import { CollapsibleWellComponent } from './common/collapsible-well.component'
 //import { EventDetailsComponent } from './events/event-details/event-details.component'
 //import { CreateEventComponent } from './events/create-event.component'
@@ -29,6 +31,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //import { EventRouteActivator } from './events/event-details/event-route-activator.service'
 //import { EventsListResolver } from './events/events-list-resolver.service'
 
+declare let toastr : Toastr
 
 @NgModule({
     imports: [ BrowserModule, 
@@ -45,16 +48,22 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
                     CreateSessionComponent,
                     SessionListComponent,
                     Error404Component,
-                    CollapsibleWellComponent],
-    providers: [ EventService, 
-                 ToastrService,
+                    CollapsibleWellComponent,
+                    DurationPipe],
+    providers: [ 
+                 EventService,                  
                  EventRouteActivator,
                  {
                      provide: 'canDeactivateCreateEvent',
                      useValue: checkDirtyState
                  },
                  EventsListResolver,
-                 AuthService],
+                 AuthService,
+                 {
+                      provide: TOASTR_TOKEN, 
+                      useValue: toastr
+                 }
+                 ],
     bootstrap: [EventsAppComponent]
 })
 export class AppModule{

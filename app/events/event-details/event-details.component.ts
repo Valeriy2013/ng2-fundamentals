@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../shared/event.service';
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import { ISession, IEvent } from "../shared/index";
 
 
@@ -22,7 +22,12 @@ export class EventDetailsComponent implements OnInit {
 
         constructor(private eventService : EventService, private route : ActivatedRoute){}
         ngOnInit(){
-            this.event = this.eventService.getEvent(+this.route.snapshot.params['id']); //cast to number
+            this.route.params.forEach((params: Params) => {
+                this.event = this.eventService.getEvent(+params['id'])
+                this.addMode = false //reset view to default, also need to remove sorting and filtering if needed
+            })
+            //old code
+            //this.event = this.eventService.getEvent(+this.route.snapshot.params['id']); //cast to number
         }
 
         addSession(){

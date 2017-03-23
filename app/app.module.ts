@@ -15,23 +15,20 @@ import {
     DurationPipe
 } from './events/index'
 import { EventsAppComponent } from './events-app.component'
-//import { EventsListComponent } from './events/events-list.component'
-//import { EventThumbnailComponent } from './events/event-thumbnail.component'
 import { NavBarComponent } from './nav/navbar.component'
-//import { EventService } from './events/shared/event.service'
-//import { ToastrService } from './common/toastr.service'
-import { TOASTR_TOKEN, Toastr } from './common/toastr.service'
-import { CollapsibleWellComponent } from './common/collapsible-well.component'
-//import { EventDetailsComponent } from './events/event-details/event-details.component'
-//import { CreateEventComponent } from './events/create-event.component'
+import { JQ_TOKEN, 
+    TOASTR_TOKEN, 
+    Toastr, 
+    CollapsibleWellComponent, 
+    SimpleModalComponent,
+    ModalTriggerDirective } from './common/index'
 import { appRoutes } from './routes'
 import { Error404Component } from './errors/404.component'
-import { AuthService } from "./user/auth.service";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-//import { EventRouteActivator } from './events/event-details/event-route-activator.service'
-//import { EventsListResolver } from './events/events-list-resolver.service'
+import { AuthService } from "./user/auth.service"
+import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 
 declare let toastr : Toastr
+declare let jQuery : Object
 
 @NgModule({
     imports: [ BrowserModule, 
@@ -49,7 +46,9 @@ declare let toastr : Toastr
                     SessionListComponent,
                     Error404Component,
                     CollapsibleWellComponent,
-                    DurationPipe],
+                    DurationPipe,
+                    SimpleModalComponent,
+                    ModalTriggerDirective],
     providers: [ 
                  EventService,                  
                  EventRouteActivator,
@@ -62,6 +61,10 @@ declare let toastr : Toastr
                  {
                       provide: TOASTR_TOKEN, 
                       useValue: toastr
+                 },
+                 {
+                      provide: JQ_TOKEN, 
+                      useValue: jQuery
                  }
                  ],
     bootstrap: [EventsAppComponent]

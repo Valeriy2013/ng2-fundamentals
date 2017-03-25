@@ -22,13 +22,10 @@ export class EventDetailsComponent implements OnInit {
 
         constructor(private eventService : EventService, private route : ActivatedRoute){}
         ngOnInit(){
-            this.route.params.forEach((params: Params) => {
-                this.event = this.eventService.getEvent(+params['id'])
-                this.addMode = false //reset view to default, also need to remove sorting and filtering if needed
-            })
-            //old code
-            //this.event = this.eventService.getEvent(+this.route.snapshot.params['id']); //cast to number
-        }
+            this.route.data.forEach((data) => {
+                this.event = data['event'];
+                this.addMode = false }) //reset view to default, also need to remove sorting and filtering if needed
+        }        
 
         addSession(){
             this.addMode = true
@@ -38,7 +35,7 @@ export class EventDetailsComponent implements OnInit {
             const nextId = Math.max.apply(null, this.event.sessions.map(s => s.id));
             session.id = nextId + 1
             this.event.sessions.push(session)
-            this.eventService.updateEvent(this.event)
+            this.eventService.saveEvent(this.event).subscribe()
             this.addMode = false
         }
         cancelAddSession(){

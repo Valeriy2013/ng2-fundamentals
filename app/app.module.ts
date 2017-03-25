@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { RouterModule } from '@angular/router'
+import { HttpModule } from '@angular/http'
 
 import {
     EventsListComponent,
@@ -8,14 +9,14 @@ import {
     EventService,
     CreateEventComponent,
     EventDetailsComponent,
-    EventRouteActivator,
     EventsListResolver,
     CreateSessionComponent,
     SessionListComponent,
     DurationPipe,
     VoterService,
     UpvoteComponent,
-    LocationValidator
+    LocationValidator,
+    EventResolver
 } from './events/index'
 import { EventsAppComponent } from './events-app.component'
 import { NavBarComponent } from './nav/navbar.component'
@@ -36,6 +37,7 @@ declare let jQuery : Object
 @NgModule({
     imports: [ BrowserModule, 
                FormsModule,
+               HttpModule,
                ReactiveFormsModule,
                RouterModule.forRoot(appRoutes)
              ],
@@ -56,12 +58,12 @@ declare let jQuery : Object
                     LocationValidator],
     providers: [ 
                  EventService,                  
-                 EventRouteActivator,
                  {
                      provide: 'canDeactivateCreateEvent',
                      useValue: checkDirtyState
                  },
                  EventsListResolver,
+                 EventResolver,
                  AuthService,
                  {
                       provide: TOASTR_TOKEN, 
